@@ -1,0 +1,53 @@
+//Smart Register Assignments:  {'r63': 'r3', 'r62': 'r1', 'r61': 'r2', 'r60': 'r3', 'r67': 'r2', 'r66': 'r3', 'r65': 'r1', 'r64': 'r2', 'r69': 'r3', 'r68': 'r1', 'r17': 'r1', 'r18': 'r2', 'r19': 'r1', 'r70': 'r2', 'r71': 'r1', 'r58': 'r2', 'r59': 'r1', 'r74': 'r1', 'r75': 'r3', 'r76': 'r2', 'r77': 'r1', 'r78': 'r3', 'r79': 'r2', 'r50': 'r5', 'r51': 'r4', 'r56': 'r1', 'r57': 'r3', 'r55': 'r2', 'r0': 'r4', 'r1': 'r5', 'r2': 'r1', 'r3': 'r4', 'r72': 'r3', 'r73': 'r2', 'r81': 'r3', 'r80': 'r1', 'r83': 'r1', 'r82': 'r2', 'r85': 'r2', 'r84': 'r3', 'r87': 'r3', 'r86': 'r1'}
+loadI	1024 => r4
+loadI	1028 => r5
+load	r4 => r1
+load	r5 => r4
+loadI	4 => r6
+//Storing r54 into memory. 
+ loadI 1020 => r7	 //@r54
+ store r6 => r7
+loadI	1024 => r5
+add	r1, r4 => r2
+lshift	r4, r4 => r1
+add	r2, r1 => r3
+lshift	r1, r4 => r2
+add	r3, r2 => r1
+lshift	r2, r4 => r3
+add	r1, r3 => r2
+lshift	r3, r4 => r1
+add	r2, r1 => r3
+lshift	r1, r4 => r2
+add	r3, r2 => r1
+lshift	r2, r4 => r3
+add	r1, r3 => r2
+lshift	r3, r4 => r1
+add	r2, r1 => r3
+lshift	r1, r4 => r2
+add	r3, r2 => r1
+lshift	r2, r4 => r3
+add	r1, r3 => r2
+lshift	r3, r4 => r1
+add	r2, r1 => r3
+lshift	r1, r4 => r2
+add	r3, r2 => r1
+lshift	r2, r4 => r3
+add	r1, r3 => r2
+lshift	r3, r4 => r1
+add	r2, r1 => r3
+lshift	r1, r4 => r2
+add	r3, r2 => r1
+lshift	r2, r4 => r3
+add	r1, r3 => r2
+lshift	r3, r4 => r1
+add	r2, r1 => r3
+store	r3 => r5
+loadI	17 => r1
+lshift	r4, r1 => r2
+sub	r2, r4 => r1
+// Cache Hit: Loading r54 from register r6
+add	r5, r6 => r4
+store	r1 => r4
+output	1024
+output	1028
+

@@ -1,0 +1,10 @@
+CS415 Compiler Front-End Project
+Spring 2011
+
+  - to generate the parser, type
+        > make
+
+  - to run the parser on input file "demo-simple", type
+        > ./parser < demo-simple
+
+Additional test programs will be made available in subdirectory "testcases".

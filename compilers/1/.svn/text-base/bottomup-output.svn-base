@@ -1,0 +1,165 @@
+loadI	1024 => r1
+loadI	1028 => r2
+load	r1 => r3
+load	r2 => r4
+loadI	4 => r5
+//Storing r0 into memory. 
+ loadI 1020 => r6 //@ r0 
+ store r1 => r6 
+loadI	1024 => r1
+//Storing r1 into memory. 
+ loadI 1016 => r6 //@ r1 
+ store r2 => r6 
+add	r3, r4 => r2
+//Storing r2 into memory. 
+ loadI 1012 => r6 //@ r2 
+ store r3 => r6 
+lshift	r4, r4 => r3
+//Storing r54 into memory. 
+ loadI 1008 => r6 //@ r54 
+ store r5 => r6 
+add	r2, r3 => r5
+//Storing r55 into memory. 
+ loadI 1004 => r6 //@ r55 
+ store r2 => r6 
+lshift	r3, r4 => r2
+//Storing r56 into memory. 
+ loadI 1000 => r6 //@ r56 
+ store r3 => r6 
+add	r5, r2 => r3
+//Storing r57 into memory. 
+ loadI 996 => r6 //@ r57 
+ store r5 => r6 
+lshift	r2, r4 => r5
+//Storing r58 into memory. 
+ loadI 992 => r6 //@ r58 
+ store r2 => r6 
+add	r3, r5 => r2
+//Storing r59 into memory. 
+ loadI 988 => r6 //@ r59 
+ store r3 => r6 
+lshift	r5, r4 => r3
+//Storing r60 into memory. 
+ loadI 984 => r6 //@ r60 
+ store r5 => r6 
+add	r2, r3 => r5
+//Storing r61 into memory. 
+ loadI 980 => r6 //@ r61 
+ store r2 => r6 
+lshift	r3, r4 => r2
+//Storing r62 into memory. 
+ loadI 976 => r6 //@ r62 
+ store r3 => r6 
+add	r5, r2 => r3
+//Storing r63 into memory. 
+ loadI 972 => r6 //@ r63 
+ store r5 => r6 
+lshift	r2, r4 => r5
+//Storing r64 into memory. 
+ loadI 968 => r6 //@ r64 
+ store r2 => r6 
+add	r3, r5 => r2
+//Storing r65 into memory. 
+ loadI 964 => r6 //@ r65 
+ store r3 => r6 
+lshift	r5, r4 => r3
+//Storing r66 into memory. 
+ loadI 960 => r6 //@ r66 
+ store r5 => r6 
+add	r2, r3 => r5
+//Storing r67 into memory. 
+ loadI 956 => r6 //@ r67 
+ store r2 => r6 
+lshift	r3, r4 => r2
+//Storing r68 into memory. 
+ loadI 952 => r6 //@ r68 
+ store r3 => r6 
+add	r5, r2 => r3
+//Storing r69 into memory. 
+ loadI 948 => r6 //@ r69 
+ store r5 => r6 
+lshift	r2, r4 => r5
+//Storing r70 into memory. 
+ loadI 944 => r6 //@ r70 
+ store r2 => r6 
+add	r3, r5 => r2
+//Storing r71 into memory. 
+ loadI 940 => r6 //@ r71 
+ store r3 => r6 
+lshift	r5, r4 => r3
+//Storing r72 into memory. 
+ loadI 936 => r6 //@ r72 
+ store r5 => r6 
+add	r2, r3 => r5
+//Storing r73 into memory. 
+ loadI 932 => r6 //@ r73 
+ store r2 => r6 
+lshift	r3, r4 => r2
+//Storing r74 into memory. 
+ loadI 928 => r6 //@ r74 
+ store r3 => r6 
+add	r5, r2 => r3
+//Storing r75 into memory. 
+ loadI 924 => r6 //@ r75 
+ store r5 => r6 
+lshift	r2, r4 => r5
+//Storing r76 into memory. 
+ loadI 920 => r6 //@ r76 
+ store r2 => r6 
+add	r3, r5 => r2
+//Storing r77 into memory. 
+ loadI 916 => r6 //@ r77 
+ store r3 => r6 
+lshift	r5, r4 => r3
+//Storing r78 into memory. 
+ loadI 912 => r6 //@ r78 
+ store r5 => r6 
+add	r2, r3 => r5
+//Storing r79 into memory. 
+ loadI 908 => r6 //@ r79 
+ store r2 => r6 
+lshift	r3, r4 => r2
+//Storing r80 into memory. 
+ loadI 904 => r6 //@ r80 
+ store r3 => r6 
+add	r5, r2 => r3
+//Storing r81 into memory. 
+ loadI 900 => r6 //@ r81 
+ store r5 => r6 
+lshift	r2, r4 => r5
+//Storing r82 into memory. 
+ loadI 896 => r6 //@ r82 
+ store r2 => r6 
+add	r3, r5 => r2
+//Storing r83 into memory. 
+ loadI 892 => r6 //@ r83 
+ store r3 => r6 
+lshift	r5, r4 => r3
+//Storing r84 into memory. 
+ loadI 888 => r6 //@ r84 
+ store r5 => r6 
+add	r2, r3 => r5
+store	r5 => r1
+//Storing r86 into memory. 
+ loadI 884 => r6 //@ r86 
+ store r3 => r6 
+loadI	17 => r3
+//Storing r85 into memory. 
+ loadI 880 => r6 //@ r85 
+ store r2 => r6 
+lshift	r4, r3 => r2
+//Storing r17 into memory. 
+ loadI 876 => r6 //@ r17 
+ store r3 => r6 
+sub	r2, r4 => r3
+//Storing r18 into memory. 
+ loadI 868 => r6 //@ r18 
+ store r2 => r6 
+//Storing r87 into memory. 
+ loadI 872 => r6 //@ r87 
+ store r5 => r6 
+add	r1, r5 => r2
+store	r3 => r2
+output	1024
+output	1028
+

@@ -1,0 +1,6 @@
+program SIMPLE ; 
+begin
+  A := 5 + 5;
+  C := 5 + A * 2;
+  B := A + C
+end.

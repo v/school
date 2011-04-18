@@ -1,0 +1,14 @@
+program Demo;
+  var
+    A: integer;
+    B, C: integer
+    D: boolean;
+  begin
+    B := 2+;
+    writeln(B);
+    A := B + C;
+    D := A * true;
+    writeln(C)
+    writeln(D)
+  end.
+

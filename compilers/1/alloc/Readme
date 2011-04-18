@@ -1,0 +1,18 @@
+Author: Vaibhav Verma
+NetID: vverna
+
+CS 415 - Compilers - Register Allocation Project
+
+This code runs on python versions between 2 and 3 (tested on 2.4 and 2.6)
+
+There is one source file parse_iloc.py. 
+
+The program takes in inputs through command line arguments.
+python parse_iloc.py <input iloc file> <allocation scheme> <number of total register>
+
+It prints out the resulting iloc code onto stdout.
+
+Allocation Scheme can be one of the following:
+0 - Top Down Allocation (No consideration of Live Ranges)
+1 - Top Down Allocation (Consideration of Live Ranges. Longest live range spilled upon conflict)
+2 - Bottom Up Allocation (Furthest use in the future is the register spilled.)

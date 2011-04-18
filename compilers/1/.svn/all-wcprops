@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/source/compilers/!svn/ver/23/1
+END
+alloc.tar
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/source/compilers/!svn/ver/23/1/alloc.tar
+END
+naive-output
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/source/compilers/!svn/ver/23/1/naive-output
+END
+output
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/source/compilers/!svn/ver/23/1/output
+END
+test_compile.sh
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/source/compilers/!svn/ver/20/1/test_compile.sh
+END
+smart-output
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/source/compilers/!svn/ver/23/1/smart-output
+END
+bottomup-output
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/source/compilers/!svn/ver/23/1/bottomup-output
+END
+parse_iloc.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/source/compilers/!svn/ver/19/1/parse_iloc.py
+END
+test-block
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/source/compilers/!svn/ver/20/1/test-block
+END

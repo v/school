@@ -1,0 +1,309 @@
+//Naive Register Assignments:  {'r62': 'r2', 'r60': 'r3', 'r64': 'r5', 'r66': 'r4', 'r3': 'r1'}
+loadI	1024 => r6
+//Storing r0 into memory. 
+ loadI 1020 => r7	 //@r0
+ store r6 => r7
+loadI	1028 => r6
+//Storing r1 into memory. 
+ loadI 1016 => r7	 //@r1
+ store r6 => r7
+// Loading r0 from memory into r6.
+loadI 1020 => r6	//@r0
+load r6 => r6
+
+load	r6 => r7
+//Storing r2 into memory. 
+ loadI 1012 => r6	 //@r2
+ store r7 => r6
+// Loading r1 from memory into r6.
+loadI 1016 => r6	//@r1
+load r6 => r6
+
+load	r6 => r1
+loadI	4 => r6
+//Storing r54 into memory. 
+ loadI 1008 => r7	 //@r54
+ store r6 => r7
+loadI	1024 => r6
+//Storing r50 into memory. 
+ loadI 1004 => r7	 //@r50
+ store r6 => r7
+// Loading r2 from memory into r6.
+loadI 1012 => r6	//@r2
+load r6 => r6
+
+add	r6, r1 => r7
+//Storing r55 into memory. 
+ loadI 1000 => r6	 //@r55
+ store r7 => r6
+lshift	r1, r1 => r6
+//Storing r56 into memory. 
+ loadI 996 => r7	 //@r56
+ store r6 => r7
+// Loading r55 from memory into r6.
+loadI 1000 => r6	//@r55
+load r6 => r6
+
+// Loading r56 from memory into r7.
+loadI 996 => r7	//@r56
+load r7 => r7
+
+add	r6, r7 => r7
+//Storing r57 into memory. 
+ loadI 992 => r6	 //@r57
+ store r7 => r6
+// Loading r56 from memory into r6.
+loadI 996 => r6	//@r56
+load r6 => r6
+
+lshift	r6, r1 => r7
+//Storing r58 into memory. 
+ loadI 988 => r6	 //@r58
+ store r7 => r6
+// Loading r57 from memory into r6.
+loadI 992 => r6	//@r57
+load r6 => r6
+
+// Cache Hit: Loading r58 from register r7
+add	r6, r7 => r7
+//Storing r59 into memory. 
+ loadI 984 => r6	 //@r59
+ store r7 => r6
+// Loading r58 from memory into r6.
+loadI 988 => r6	//@r58
+load r6 => r6
+
+lshift	r6, r1 => r3
+// Cache Hit: Loading r59 from register r7
+add	r7, r3 => r6
+//Storing r61 into memory. 
+ loadI 980 => r7	 //@r61
+ store r6 => r7
+lshift	r3, r1 => r2
+// Cache Hit: Loading r61 from register r6
+add	r6, r2 => r7
+//Storing r63 into memory. 
+ loadI 976 => r6	 //@r63
+ store r7 => r6
+lshift	r2, r1 => r5
+// Cache Hit: Loading r63 from register r7
+add	r7, r5 => r6
+//Storing r65 into memory. 
+ loadI 972 => r7	 //@r65
+ store r6 => r7
+lshift	r5, r1 => r4
+// Cache Hit: Loading r65 from register r6
+add	r6, r4 => r7
+//Storing r67 into memory. 
+ loadI 968 => r6	 //@r67
+ store r7 => r6
+lshift	r4, r1 => r6
+//Storing r68 into memory. 
+ loadI 964 => r7	 //@r68
+ store r6 => r7
+// Loading r67 from memory into r6.
+loadI 968 => r6	//@r67
+load r6 => r6
+
+// Loading r68 from memory into r7.
+loadI 964 => r7	//@r68
+load r7 => r7
+
+add	r6, r7 => r7
+//Storing r69 into memory. 
+ loadI 960 => r6	 //@r69
+ store r7 => r6
+// Loading r68 from memory into r6.
+loadI 964 => r6	//@r68
+load r6 => r6
+
+lshift	r6, r1 => r7
+//Storing r70 into memory. 
+ loadI 956 => r6	 //@r70
+ store r7 => r6
+// Loading r69 from memory into r6.
+loadI 960 => r6	//@r69
+load r6 => r6
+
+// Cache Hit: Loading r70 from register r7
+add	r6, r7 => r7
+//Storing r71 into memory. 
+ loadI 952 => r6	 //@r71
+ store r7 => r6
+// Loading r70 from memory into r6.
+loadI 956 => r6	//@r70
+load r6 => r6
+
+lshift	r6, r1 => r7
+//Storing r72 into memory. 
+ loadI 948 => r6	 //@r72
+ store r7 => r6
+// Loading r71 from memory into r6.
+loadI 952 => r6	//@r71
+load r6 => r6
+
+// Cache Hit: Loading r72 from register r7
+add	r6, r7 => r7
+//Storing r73 into memory. 
+ loadI 944 => r6	 //@r73
+ store r7 => r6
+// Loading r72 from memory into r6.
+loadI 948 => r6	//@r72
+load r6 => r6
+
+lshift	r6, r1 => r7
+//Storing r74 into memory. 
+ loadI 940 => r6	 //@r74
+ store r7 => r6
+// Loading r73 from memory into r6.
+loadI 944 => r6	//@r73
+load r6 => r6
+
+// Cache Hit: Loading r74 from register r7
+add	r6, r7 => r7
+//Storing r75 into memory. 
+ loadI 936 => r6	 //@r75
+ store r7 => r6
+// Loading r74 from memory into r6.
+loadI 940 => r6	//@r74
+load r6 => r6
+
+lshift	r6, r1 => r7
+//Storing r76 into memory. 
+ loadI 932 => r6	 //@r76
+ store r7 => r6
+// Loading r75 from memory into r6.
+loadI 936 => r6	//@r75
+load r6 => r6
+
+// Cache Hit: Loading r76 from register r7
+add	r6, r7 => r7
+//Storing r77 into memory. 
+ loadI 928 => r6	 //@r77
+ store r7 => r6
+// Loading r76 from memory into r6.
+loadI 932 => r6	//@r76
+load r6 => r6
+
+lshift	r6, r1 => r7
+//Storing r78 into memory. 
+ loadI 924 => r6	 //@r78
+ store r7 => r6
+// Loading r77 from memory into r6.
+loadI 928 => r6	//@r77
+load r6 => r6
+
+// Cache Hit: Loading r78 from register r7
+add	r6, r7 => r7
+//Storing r79 into memory. 
+ loadI 920 => r6	 //@r79
+ store r7 => r6
+// Loading r78 from memory into r6.
+loadI 924 => r6	//@r78
+load r6 => r6
+
+lshift	r6, r1 => r7
+//Storing r80 into memory. 
+ loadI 916 => r6	 //@r80
+ store r7 => r6
+// Loading r79 from memory into r6.
+loadI 920 => r6	//@r79
+load r6 => r6
+
+// Cache Hit: Loading r80 from register r7
+add	r6, r7 => r7
+//Storing r81 into memory. 
+ loadI 912 => r6	 //@r81
+ store r7 => r6
+// Loading r80 from memory into r6.
+loadI 916 => r6	//@r80
+load r6 => r6
+
+lshift	r6, r1 => r7
+//Storing r82 into memory. 
+ loadI 908 => r6	 //@r82
+ store r7 => r6
+// Loading r81 from memory into r6.
+loadI 912 => r6	//@r81
+load r6 => r6
+
+// Cache Hit: Loading r82 from register r7
+add	r6, r7 => r7
+//Storing r83 into memory. 
+ loadI 904 => r6	 //@r83
+ store r7 => r6
+// Loading r82 from memory into r6.
+loadI 908 => r6	//@r82
+load r6 => r6
+
+lshift	r6, r1 => r7
+//Storing r84 into memory. 
+ loadI 900 => r6	 //@r84
+ store r7 => r6
+// Loading r83 from memory into r6.
+loadI 904 => r6	//@r83
+load r6 => r6
+
+// Cache Hit: Loading r84 from register r7
+add	r6, r7 => r7
+//Storing r85 into memory. 
+ loadI 896 => r6	 //@r85
+ store r7 => r6
+// Loading r84 from memory into r6.
+loadI 900 => r6	//@r84
+load r6 => r6
+
+lshift	r6, r1 => r7
+//Storing r86 into memory. 
+ loadI 892 => r6	 //@r86
+ store r7 => r6
+// Loading r85 from memory into r6.
+loadI 896 => r6	//@r85
+load r6 => r6
+
+// Cache Hit: Loading r86 from register r7
+add	r6, r7 => r7
+//Storing r87 into memory. 
+ loadI 888 => r6	 //@r87
+ store r7 => r6
+// Cache Hit: Loading r87 from register r7
+// Loading r50 from memory into r6.
+loadI 1004 => r6	//@r50
+load r6 => r6
+
+store	r7 => r6
+loadI	17 => r6
+//Storing r17 into memory. 
+ loadI 884 => r7	 //@r17
+ store r6 => r7
+// Cache Hit: Loading r17 from register r6
+lshift	r1, r6 => r7
+//Storing r18 into memory. 
+ loadI 880 => r6	 //@r18
+ store r7 => r6
+// Cache Hit: Loading r18 from register r7
+sub	r7, r1 => r6
+//Storing r19 into memory. 
+ loadI 876 => r7	 //@r19
+ store r6 => r7
+// Loading r50 from memory into r6.
+loadI 1004 => r6	//@r50
+load r6 => r6
+
+// Loading r54 from memory into r7.
+loadI 1008 => r7	//@r54
+load r7 => r7
+
+add	r6, r7 => r7
+//Storing r51 into memory. 
+ loadI 872 => r6	 //@r51
+ store r7 => r6
+// Loading r19 from memory into r6.
+loadI 876 => r6	//@r19
+load r6 => r6
+
+// Cache Hit: Loading r51 from register r7
+store	r6 => r7
+output	1024
+output	1028
+

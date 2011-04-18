@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/source/compilers/!svn/ver/24/4
+END
+symtab.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/source/compilers/!svn/ver/23/4/symtab.c
+END
+parse.y
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/source/compilers/!svn/ver/23/4/parse.y
+END
+lex.yy.o
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/source/compilers/!svn/ver/24/4/lex.yy.o
+END
+symtab.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/source/compilers/!svn/ver/23/4/symtab.h
+END
+attr.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/source/compilers/!svn/ver/22/4/attr.c
+END
+parser
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/source/compilers/!svn/ver/24/4/parser
+END
+symtab.o
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/source/compilers/!svn/ver/24/4/symtab.o
+END
+ReadMe
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/source/compilers/!svn/ver/22/4/ReadMe
+END
+parse.tab.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/source/compilers/!svn/ver/24/4/parse.tab.c
+END
+attr.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/source/compilers/!svn/ver/22/4/attr.h
+END
+parse.tab.h
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/source/compilers/!svn/ver/24/4/parse.tab.h
+END
+attr.o
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/source/compilers/!svn/ver/24/4/attr.o
+END
+parse.output
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/source/compilers/!svn/ver/24/4/parse.output
+END
+lex.yy.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/source/compilers/!svn/ver/24/4/lex.yy.c
+END
+demo-simple
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/source/compilers/!svn/ver/22/4/demo-simple
+END
+parse.tab.o
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/source/compilers/!svn/ver/24/4/parse.tab.o
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/source/compilers/!svn/ver/22/4/Makefile
+END
+scan.l
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/source/compilers/!svn/ver/22/4/scan.l
+END
