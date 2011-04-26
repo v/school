@@ -10,20 +10,23 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 /* extern void * malloc(int size); */
 
 typedef struct st_entry {
-	char *key;
-	void *value;
+	const char *key;
+	char *value;
 	struct st_entry *next;
 } st_entry;
 
-void * insert(char *id);
+int insert(const char *id, char *type);
 
-void * lookup(char *id);
+char * lookup(const char *id);
 
 void * get_next_register();
+
+void print_list();
 
 
 

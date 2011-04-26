@@ -4,33 +4,35 @@
 
 #include "symtab.h"
 
-extern void * malloc(int size);
-
 st_entry *st_head = NULL;
 
-void *
-insert(char *id)
+int
+insert(const char *id, char *type)
 {
+	if(lookup(id))
+		return 0;
 	/* Create node */
 	st_entry *new_node = malloc(sizeof(st_entry));	
 	new_node->key = id;
-	new_node->value = get_next_register();
+	new_node->value = type;
 
 	/* Append to the list */
 	new_node->next = st_head;
 	st_head = new_node;
 
-	return st_head;
+	return 1;
 }
 
-void *
-lookup(char *id)
+char *
+lookup(const char *id)
 {
 	st_entry *ptr = st_head;
 	while(ptr)
 	{
 		if(!strcmp(ptr->key, id))
+		{
 			return ptr->value;
+		}
 
 		ptr = ptr->next;
 	}
@@ -45,5 +47,17 @@ get_next_register()
 {
 	int size = (register_count/10) + 1;
 	char *buffer = malloc(size*sizeof(char));
-	return (void *)sprintf(buffer, "r%d", register_count++);
+	sprintf(buffer, "r%d", register_count++);
+	return (void *) buffer;
+}
+
+void
+print_list()
+{
+	st_entry *ptr = st_head;
+	while(ptr)
+	{
+		printf("Key: %s - Value: %s \n", ptr->key, ptr->value);
+		ptr = ptr->next;
+	}
 }

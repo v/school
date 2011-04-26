@@ -10,7 +10,7 @@ There is no compilation step required for this script on the iLab machines.
 
 The program takes in the input string as a command line argument. For Example:
 
-./rec.py 'a=3;b=1;c=2;!a;!b;!c'
+./rec.py 'a=3;b=1;c=2;!a;!b;!c.'
 
 loadI   1020 => r0 //for printing purposes
 loadI   3 => r1

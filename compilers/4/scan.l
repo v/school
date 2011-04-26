@@ -15,7 +15,7 @@ qstring	\'[^\'\n]*[\'\n]
 
 %%
 {D}+		{ECHO;
-		yylval.token.num = atoi(yytext);
+		yylval.attrs.token.num = atoi(yytext);
 		return(ICONST);}
 :=		{ECHO;return(ASG);}
 "=="		{ECHO;return(EQ);}
@@ -58,9 +58,13 @@ not             {ECHO;return(NOT);}
 writeln		{ECHO;return(WRITELN);}
 true		{ECHO;return(TRUE);}
 false		{ECHO;return(FALSE);}
+for		{ECHO;return(FOR);}
+while		{ECHO;return(WHILE);}
+boolean		{ECHO;return(BOOLEAN);}
+do		{ECHO;return(DO);}
 {id}		{ECHO;
-		yylval.token.str = (char *) malloc(strlen(yytext)+1);
-		strcpy(yylval.token.str,yytext);
+		yylval.attrs.token.str = (char *) malloc(strlen(yytext)+1);
+		strcpy(yylval.attrs.token.str,yytext);
 		return(ID);
 		}
 \n		{int c;

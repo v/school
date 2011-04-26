@@ -8,7 +8,7 @@ program Demo;
     writeln(B);
     A := B + C;
     D := A * true;
-    writeln(C)
+    writeln(C);
     writeln(D)
   end.
 

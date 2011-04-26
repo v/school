@@ -1,41 +1,4 @@
-Useless nonterminals
-
-   idlist
-   type
-   stype
-   constant
-
-
-Terminals which are not used
-
-   ARRAY
-   RANGE
-   OF
-   INT
-   ASG
-   EQ
-   NEQ
-   LT
-   LEQ
-   BOOLEAN
-   INTEGER
-   ".."
-
-
-Useless rules
-
-   46 idlist: type
-   47       | idlist ',' ID
-   48       | ID
-
-   49 type: ARRAY '[' ICONST ".." ICONST ']' OF stype
-   50     | stype
-
-   51 stype: INTEGER
-   52      | BOOLEAN
-
-   53 constant: ICONST
-   54         | boolean_constant
+State 51 conflicts: 2 reduce/reduce
 
 
 Grammar
@@ -51,157 +14,192 @@ Grammar
 
     5 vardcls: vardcls vardcl ';'
     6        | vardcl ';'
+    7        | error delim
 
-    7 vardcl: /* empty */
+    8 vardcl: idlist ':' type
 
-    8 stmtlist: stmtlist ';' stmt
-    9         | stmt
+    9 idlist: idlist ',' ID
+   10       | ID
 
-   10 stmt: ifstmt
-   11     | astmt
-   12     | wstmt
-   13     | fstmt
-   14     | cmpdstmt
-   15     | writestmt
+   11 type: ARRAY '[' ICONST RANGE ICONST ']' OF stype
+   12     | stype
 
-   16 wstmt: WHILE condexp DO stmt
+   13 stype: INT
+   14      | BOOLEAN
 
-   17 fstmt: FOR ID ":=" ICONST ',' ICONST DO astmt
+   15 stmtlist: stmtlist ';' stmt
+   16         | stmt
+   17         | error stmt_end
 
-   18 ifstmt: ifhead THEN stmt ELSE stmt
-   19       | ifhead THEN stmt
+   18 stmt_end: constant
+   19         | rvalue
+   20         | '\n'
 
-   20 ifhead: IF condexp
+   21 stmt: ifstmt
+   22     | astmt
+   23     | wstmt
+   24     | fstmt
+   25     | cmpdstmt
+   26     | writestmt
 
-   21 cmpdstmt: BEG stmtlist END
+   27 delim: ';'
+   28      | '\n'
 
-   22 writestmt: WRITELN '(' exp ')'
+   29 wstmt: WHILE condexp DO stmt
+   30      | error delim
 
-   23 astmt: lvalue ":=" exp
+   31 fstmt: FOR ID_USE ASG constant ',' constant DO astmt
 
-   24 exp: rvalue
-   25    | exp '+' exp
-   26    | exp '-' exp
-   27    | exp '*' exp
-   28    | exp AND exp
-   29    | exp OR exp
-   30    | exp EXOR exp
-   31    | NOT exp
-   32    | '(' exp ')'
-   33    | ICONST
+   32 ifstmt: ifhead THEN stmt ELSE stmt
+   33       | ifhead THEN stmt
 
-   34 condexp: exp "!=" exp
-   35        | exp "==" exp
-   36        | exp "<" exp
-   37        | exp "<=" exp
-   38        | ID
-   39        | boolean_constant
+   34 ifhead: IF condexp
+   35       | error delim
 
-   40 lvalue: ID
-   41       | ID '[' exp ']'
+   36 cmpdstmt: BEG stmtlist END
 
-   42 rvalue: ID
-   43       | ID '[' exp ']'
+   37 writestmt: WRITELN '(' exp ')'
 
-   44 boolean_constant: TRUE
-   45                 | FALSE
+   38 astmt: lvalue ASG exp
+
+   39 exp: rvalue
+   40    | exp '+' exp
+   41    | exp '-' exp
+   42    | exp '*' exp
+   43    | exp AND exp
+   44    | exp OR exp
+   45    | exp EXOR exp
+   46    | NOT exp
+   47    | '(' exp ')'
+   48    | constant
+   49    | error stmt_end
+
+   50 condexp: exp NEQ exp
+   51        | exp EQ exp
+   52        | exp LT exp
+   53        | exp LEQ exp
+   54        | ID_USE
+   55        | boolean_constant
+
+   56 lvalue: ID_USE
+   57       | ID_USE '[' exp ']'
+
+   58 rvalue: ID_USE
+   59       | ID_USE '[' exp ']'
+
+   60 constant: ICONST
+   61         | boolean_constant
+
+   62 boolean_constant: TRUE
+   63                 | FALSE
+
+   64 ID_USE: ID
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-'(' (40) 22 32
-')' (41) 22 32
-'*' (42) 27
-'+' (43) 25
-',' (44) 17
-'-' (45) 26
-';' (59) 1 5 6 8
-'[' (91) 41 43
-']' (93) 41 43
-error (256)
+'\n' (10) 20 28
+'(' (40) 37 47
+')' (41) 37 47
+'*' (42) 42
+'+' (43) 40
+',' (44) 9 31
+'-' (45) 41
+':' (58) 8
+';' (59) 1 5 6 15 27
+'[' (91) 11 57 59
+']' (93) 11 57 59
+error (256) 7 17 30 35 49
 PROG (258) 1
 PERIOD (259) 1
 VAR (260) 3
-ARRAY (261)
-RANGE (262)
-OF (263)
-INT (264)
-WRITELN (265) 22
-THEN (266) 18 19
-ELSE (267) 18
-IF (268) 20
-BEG (269) 21
-END (270) 21
-ASG (271)
-EQ (272)
-NEQ (273)
-LT (274)
-LEQ (275)
-OR (276) 29
-EXOR (277) 30
-AND (278) 28
-NOT (279) 31
-TRUE (280) 44
-FALSE (281) 45
-WHILE (282) 16
-DO (283) 16 17
-FOR (284) 17
-BOOLEAN (285)
-INTEGER (286)
-ID (287) 1 17 38 40 41 42 43
-ICONST (288) 17 33
-".." (289)
-":=" (290) 17 23
-"!=" (291) 34
-"==" (292) 35
-"<" (293) 36
-"<=" (294) 37
+ARRAY (261) 11
+RANGE (262) 11
+OF (263) 11
+INT (264) 13
+WRITELN (265) 37
+THEN (266) 32 33
+ELSE (267) 32
+IF (268) 34
+BEG (269) 36
+END (270) 36
+ASG (271) 31 38
+EQ (272) 51
+NEQ (273) 50
+LT (274) 52
+LEQ (275) 53
+OR (276) 44
+EXOR (277) 45
+AND (278) 43
+NOT (279) 46
+TRUE (280) 62
+FALSE (281) 63
+WHILE (282) 29
+DO (283) 29 31
+FOR (284) 31
+BOOLEAN (285) 14
+ID (286) 1 9 10 64
+ICONST (287) 11 60
 
 
 Nonterminals, with rules where they appear
 
-$accept (49)
+$accept (44)
     on left: 0
-program (50)
+program (45)
     on left: 1, on right: 0
-block (51)
+block (46)
     on left: 2, on right: 1
-variables (52)
+variables (47)
     on left: 3 4, on right: 2
-vardcls (53)
-    on left: 5 6, on right: 3 5
-vardcl (54)
-    on left: 7, on right: 5 6
-stmtlist (55)
-    on left: 8 9, on right: 8 21
-stmt (56)
-    on left: 10 11 12 13 14 15, on right: 8 9 16 18 19
+vardcls (48)
+    on left: 5 6 7, on right: 3 5
+vardcl (49)
+    on left: 8, on right: 5 6
+idlist (50)
+    on left: 9 10, on right: 8 9
+type (51)
+    on left: 11 12, on right: 8
+stype (52)
+    on left: 13 14, on right: 11 12
+stmtlist (53)
+    on left: 15 16 17, on right: 15 36
+stmt_end (54)
+    on left: 18 19 20, on right: 17 49
+stmt (55)
+    on left: 21 22 23 24 25 26, on right: 15 16 29 32 33
+delim (56)
+    on left: 27 28, on right: 7 30 35
 wstmt (57)
-    on left: 16, on right: 12
+    on left: 29 30, on right: 23
 fstmt (58)
-    on left: 17, on right: 13
+    on left: 31, on right: 24
 ifstmt (59)
-    on left: 18 19, on right: 10
+    on left: 32 33, on right: 21
 ifhead (60)
-    on left: 20, on right: 18 19
+    on left: 34 35, on right: 32 33
 cmpdstmt (61)
-    on left: 21, on right: 2 14
+    on left: 36, on right: 2 25
 writestmt (62)
-    on left: 22, on right: 15
+    on left: 37, on right: 26
 astmt (63)
-    on left: 23, on right: 11 17
+    on left: 38, on right: 22 31
 exp (64)
-    on left: 24 25 26 27 28 29 30 31 32 33, on right: 22 23 25 26 27
-    28 29 30 31 32 34 35 36 37 41 43
+    on left: 39 40 41 42 43 44 45 46 47 48 49, on right: 37 38 40 41
+    42 43 44 45 46 47 50 51 52 53 57 59
 condexp (65)
-    on left: 34 35 36 37 38 39, on right: 16 20
+    on left: 50 51 52 53 54 55, on right: 29 34
 lvalue (66)
-    on left: 40 41, on right: 23
+    on left: 56 57, on right: 38
 rvalue (67)
-    on left: 42 43, on right: 24
-boolean_constant (68)
-    on left: 44 45, on right: 39
+    on left: 58 59, on right: 19 39
+constant (68)
+    on left: 60 61, on right: 18 31 48
+boolean_constant (69)
+    on left: 62 63, on right: 55 61
+ID_USE (70)
+    on left: 64, on right: 31 54 56 57 58 59
 
 
 state 0
@@ -257,1021 +255,1440 @@ state 6
 
     3 variables: VAR . vardcls
 
-    $default  reduce using rule 7 (vardcl)
+    error  shift, and go to state 9
+    ID     shift, and go to state 10
 
-    vardcls  go to state 9
-    vardcl   go to state 10
+    vardcls  go to state 11
+    vardcl   go to state 12
+    idlist   go to state 13
 
 
 state 7
 
     1 program: PROG ID ';' block . PERIOD
 
-    PERIOD  shift, and go to state 11
+    PERIOD  shift, and go to state 14
 
 
 state 8
 
     2 block: variables . cmpdstmt
 
-    BEG  shift, and go to state 12
+    BEG  shift, and go to state 15
 
-    cmpdstmt  go to state 13
+    cmpdstmt  go to state 16
 
 
 state 9
 
-    3 variables: VAR vardcls .
-    5 vardcls: vardcls . vardcl ';'
+    7 vardcls: error . delim
 
-    ';'       reduce using rule 7 (vardcl)
-    $default  reduce using rule 3 (variables)
+    ';'   shift, and go to state 17
+    '\n'  shift, and go to state 18
 
-    vardcl  go to state 14
+    delim  go to state 19
 
 
 state 10
 
-    6 vardcls: vardcl . ';'
+   10 idlist: ID .
 
-    ';'  shift, and go to state 15
+    $default  reduce using rule 10 (idlist)
 
 
 state 11
+
+    3 variables: VAR vardcls .
+    5 vardcls: vardcls . vardcl ';'
+
+    ID  shift, and go to state 10
+
+    $default  reduce using rule 3 (variables)
+
+    vardcl  go to state 20
+    idlist  go to state 13
+
+
+state 12
+
+    6 vardcls: vardcl . ';'
+
+    ';'  shift, and go to state 21
+
+
+state 13
+
+    8 vardcl: idlist . ':' type
+    9 idlist: idlist . ',' ID
+
+    ':'  shift, and go to state 22
+    ','  shift, and go to state 23
+
+
+state 14
 
     1 program: PROG ID ';' block PERIOD .
 
     $default  reduce using rule 1 (program)
 
 
-state 12
+state 15
 
-   21 cmpdstmt: BEG . stmtlist END
+   36 cmpdstmt: BEG . stmtlist END
 
-    WRITELN  shift, and go to state 16
-    IF       shift, and go to state 17
-    BEG      shift, and go to state 12
-    WHILE    shift, and go to state 18
-    FOR      shift, and go to state 19
-    ID       shift, and go to state 20
+    error    shift, and go to state 24
+    WRITELN  shift, and go to state 25
+    IF       shift, and go to state 26
+    BEG      shift, and go to state 15
+    WHILE    shift, and go to state 27
+    FOR      shift, and go to state 28
+    ID       shift, and go to state 29
 
-    stmtlist   go to state 21
-    stmt       go to state 22
-    wstmt      go to state 23
-    fstmt      go to state 24
-    ifstmt     go to state 25
-    ifhead     go to state 26
-    cmpdstmt   go to state 27
-    writestmt  go to state 28
-    astmt      go to state 29
-    lvalue     go to state 30
+    stmtlist   go to state 30
+    stmt       go to state 31
+    wstmt      go to state 32
+    fstmt      go to state 33
+    ifstmt     go to state 34
+    ifhead     go to state 35
+    cmpdstmt   go to state 36
+    writestmt  go to state 37
+    astmt      go to state 38
+    lvalue     go to state 39
+    ID_USE     go to state 40
 
 
-state 13
+state 16
 
     2 block: variables cmpdstmt .
 
     $default  reduce using rule 2 (block)
 
 
-state 14
+state 17
+
+   27 delim: ';' .
+
+    $default  reduce using rule 27 (delim)
+
+
+state 18
+
+   28 delim: '\n' .
+
+    $default  reduce using rule 28 (delim)
+
+
+state 19
+
+    7 vardcls: error delim .
+
+    $default  reduce using rule 7 (vardcls)
+
+
+state 20
 
     5 vardcls: vardcls vardcl . ';'
 
-    ';'  shift, and go to state 31
+    ';'  shift, and go to state 41
 
 
-state 15
+state 21
 
     6 vardcls: vardcl ';' .
 
     $default  reduce using rule 6 (vardcls)
 
 
-state 16
-
-   22 writestmt: WRITELN . '(' exp ')'
-
-    '('  shift, and go to state 32
-
-
-state 17
-
-   20 ifhead: IF . condexp
-
-    NOT     shift, and go to state 33
-    TRUE    shift, and go to state 34
-    FALSE   shift, and go to state 35
-    ID      shift, and go to state 36
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp               go to state 39
-    condexp           go to state 40
-    rvalue            go to state 41
-    boolean_constant  go to state 42
-
-
-state 18
-
-   16 wstmt: WHILE . condexp DO stmt
-
-    NOT     shift, and go to state 33
-    TRUE    shift, and go to state 34
-    FALSE   shift, and go to state 35
-    ID      shift, and go to state 36
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp               go to state 39
-    condexp           go to state 43
-    rvalue            go to state 41
-    boolean_constant  go to state 42
-
-
-state 19
-
-   17 fstmt: FOR . ID ":=" ICONST ',' ICONST DO astmt
-
-    ID  shift, and go to state 44
-
-
-state 20
-
-   40 lvalue: ID .
-   41       | ID . '[' exp ']'
-
-    '['  shift, and go to state 45
-
-    $default  reduce using rule 40 (lvalue)
-
-
-state 21
-
-    8 stmtlist: stmtlist . ';' stmt
-   21 cmpdstmt: BEG stmtlist . END
-
-    END  shift, and go to state 46
-    ';'  shift, and go to state 47
-
-
 state 22
 
-    9 stmtlist: stmt .
+    8 vardcl: idlist ':' . type
 
-    $default  reduce using rule 9 (stmtlist)
+    ARRAY    shift, and go to state 42
+    INT      shift, and go to state 43
+    BOOLEAN  shift, and go to state 44
+
+    type   go to state 45
+    stype  go to state 46
 
 
 state 23
 
-   12 stmt: wstmt .
+    9 idlist: idlist ',' . ID
 
-    $default  reduce using rule 12 (stmt)
+    ID  shift, and go to state 47
 
 
 state 24
 
-   13 stmt: fstmt .
+   17 stmtlist: error . stmt_end
+   30 wstmt: error . delim
+   35 ifhead: error . delim
 
-    $default  reduce using rule 13 (stmt)
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    ';'     shift, and go to state 17
+    '\n'    shift, and go to state 51
+
+    stmt_end          go to state 52
+    delim             go to state 53
+    rvalue            go to state 54
+    constant          go to state 55
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
 
 
 state 25
 
-   10 stmt: ifstmt .
+   37 writestmt: WRITELN . '(' exp ')'
 
-    $default  reduce using rule 10 (stmt)
+    '('  shift, and go to state 58
 
 
 state 26
 
-   18 ifstmt: ifhead . THEN stmt ELSE stmt
-   19       | ifhead . THEN stmt
+   34 ifhead: IF . condexp
 
-    THEN  shift, and go to state 48
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 62
+    condexp           go to state 63
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 66
+    ID_USE            go to state 67
 
 
 state 27
 
-   14 stmt: cmpdstmt .
+   29 wstmt: WHILE . condexp DO stmt
 
-    $default  reduce using rule 14 (stmt)
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 62
+    condexp           go to state 68
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 66
+    ID_USE            go to state 67
 
 
 state 28
 
-   15 stmt: writestmt .
+   31 fstmt: FOR . ID_USE ASG constant ',' constant DO astmt
 
-    $default  reduce using rule 15 (stmt)
+    ID  shift, and go to state 29
+
+    ID_USE  go to state 69
 
 
 state 29
 
-   11 stmt: astmt .
+   64 ID_USE: ID .
 
-    $default  reduce using rule 11 (stmt)
+    $default  reduce using rule 64 (ID_USE)
 
 
 state 30
 
-   23 astmt: lvalue . ":=" exp
+   15 stmtlist: stmtlist . ';' stmt
+   36 cmpdstmt: BEG stmtlist . END
 
-    ":="  shift, and go to state 49
+    END  shift, and go to state 70
+    ';'  shift, and go to state 71
 
 
 state 31
+
+   16 stmtlist: stmt .
+
+    $default  reduce using rule 16 (stmtlist)
+
+
+state 32
+
+   23 stmt: wstmt .
+
+    $default  reduce using rule 23 (stmt)
+
+
+state 33
+
+   24 stmt: fstmt .
+
+    $default  reduce using rule 24 (stmt)
+
+
+state 34
+
+   21 stmt: ifstmt .
+
+    $default  reduce using rule 21 (stmt)
+
+
+state 35
+
+   32 ifstmt: ifhead . THEN stmt ELSE stmt
+   33       | ifhead . THEN stmt
+
+    THEN  shift, and go to state 72
+
+
+state 36
+
+   25 stmt: cmpdstmt .
+
+    $default  reduce using rule 25 (stmt)
+
+
+state 37
+
+   26 stmt: writestmt .
+
+    $default  reduce using rule 26 (stmt)
+
+
+state 38
+
+   22 stmt: astmt .
+
+    $default  reduce using rule 22 (stmt)
+
+
+state 39
+
+   38 astmt: lvalue . ASG exp
+
+    ASG  shift, and go to state 73
+
+
+state 40
+
+   56 lvalue: ID_USE .
+   57       | ID_USE . '[' exp ']'
+
+    '['  shift, and go to state 74
+
+    $default  reduce using rule 56 (lvalue)
+
+
+state 41
 
     5 vardcls: vardcls vardcl ';' .
 
     $default  reduce using rule 5 (vardcls)
 
 
-state 32
-
-   22 writestmt: WRITELN '(' . exp ')'
-
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp     go to state 51
-    rvalue  go to state 41
-
-
-state 33
-
-   31 exp: NOT . exp
-
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp     go to state 52
-    rvalue  go to state 41
-
-
-state 34
-
-   44 boolean_constant: TRUE .
-
-    $default  reduce using rule 44 (boolean_constant)
-
-
-state 35
-
-   45 boolean_constant: FALSE .
-
-    $default  reduce using rule 45 (boolean_constant)
-
-
-state 36
-
-   38 condexp: ID .
-   42 rvalue: ID .
-   43       | ID . '[' exp ']'
-
-    '['  shift, and go to state 53
-
-    THEN      reduce using rule 38 (condexp)
-    DO        reduce using rule 38 (condexp)
-    $default  reduce using rule 42 (rvalue)
-
-
-state 37
-
-   33 exp: ICONST .
-
-    $default  reduce using rule 33 (exp)
-
-
-state 38
-
-   32 exp: '(' . exp ')'
-
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp     go to state 54
-    rvalue  go to state 41
-
-
-state 39
-
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-   34 condexp: exp . "!=" exp
-   35        | exp . "==" exp
-   36        | exp . "<" exp
-   37        | exp . "<=" exp
-
-    OR    shift, and go to state 55
-    EXOR  shift, and go to state 56
-    AND   shift, and go to state 57
-    '+'   shift, and go to state 58
-    '-'   shift, and go to state 59
-    '*'   shift, and go to state 60
-    "!="  shift, and go to state 61
-    "=="  shift, and go to state 62
-    "<"   shift, and go to state 63
-    "<="  shift, and go to state 64
-
-
-state 40
-
-   20 ifhead: IF condexp .
-
-    $default  reduce using rule 20 (ifhead)
-
-
-state 41
-
-   24 exp: rvalue .
-
-    $default  reduce using rule 24 (exp)
-
-
 state 42
 
-   39 condexp: boolean_constant .
+   11 type: ARRAY . '[' ICONST RANGE ICONST ']' OF stype
 
-    $default  reduce using rule 39 (condexp)
+    '['  shift, and go to state 75
 
 
 state 43
 
-   16 wstmt: WHILE condexp . DO stmt
+   13 stype: INT .
 
-    DO  shift, and go to state 65
+    $default  reduce using rule 13 (stype)
 
 
 state 44
 
-   17 fstmt: FOR ID . ":=" ICONST ',' ICONST DO astmt
+   14 stype: BOOLEAN .
 
-    ":="  shift, and go to state 66
+    $default  reduce using rule 14 (stype)
 
 
 state 45
 
-   41 lvalue: ID '[' . exp ']'
+    8 vardcl: idlist ':' type .
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp     go to state 67
-    rvalue  go to state 41
+    $default  reduce using rule 8 (vardcl)
 
 
 state 46
 
-   21 cmpdstmt: BEG stmtlist END .
+   12 type: stype .
 
-    $default  reduce using rule 21 (cmpdstmt)
+    $default  reduce using rule 12 (type)
 
 
 state 47
 
-    8 stmtlist: stmtlist ';' . stmt
+    9 idlist: idlist ',' ID .
 
-    WRITELN  shift, and go to state 16
-    IF       shift, and go to state 17
-    BEG      shift, and go to state 12
-    WHILE    shift, and go to state 18
-    FOR      shift, and go to state 19
-    ID       shift, and go to state 20
-
-    stmt       go to state 68
-    wstmt      go to state 23
-    fstmt      go to state 24
-    ifstmt     go to state 25
-    ifhead     go to state 26
-    cmpdstmt   go to state 27
-    writestmt  go to state 28
-    astmt      go to state 29
-    lvalue     go to state 30
+    $default  reduce using rule 9 (idlist)
 
 
 state 48
 
-   18 ifstmt: ifhead THEN . stmt ELSE stmt
-   19       | ifhead THEN . stmt
+   62 boolean_constant: TRUE .
 
-    WRITELN  shift, and go to state 16
-    IF       shift, and go to state 17
-    BEG      shift, and go to state 12
-    WHILE    shift, and go to state 18
-    FOR      shift, and go to state 19
-    ID       shift, and go to state 20
-
-    stmt       go to state 69
-    wstmt      go to state 23
-    fstmt      go to state 24
-    ifstmt     go to state 25
-    ifhead     go to state 26
-    cmpdstmt   go to state 27
-    writestmt  go to state 28
-    astmt      go to state 29
-    lvalue     go to state 30
+    $default  reduce using rule 62 (boolean_constant)
 
 
 state 49
 
-   23 astmt: lvalue ":=" . exp
+   63 boolean_constant: FALSE .
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp     go to state 70
-    rvalue  go to state 41
+    $default  reduce using rule 63 (boolean_constant)
 
 
 state 50
 
-   42 rvalue: ID .
-   43       | ID . '[' exp ']'
+   60 constant: ICONST .
 
-    '['  shift, and go to state 53
-
-    $default  reduce using rule 42 (rvalue)
+    $default  reduce using rule 60 (constant)
 
 
 state 51
 
-   22 writestmt: WRITELN '(' exp . ')'
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
+   20 stmt_end: '\n' .
+   28 delim: '\n' .
 
-    OR    shift, and go to state 55
-    EXOR  shift, and go to state 56
-    AND   shift, and go to state 57
-    '+'   shift, and go to state 58
-    '-'   shift, and go to state 59
-    '*'   shift, and go to state 60
-    ')'   shift, and go to state 71
+    THEN      reduce using rule 28 (delim)
+    END       reduce using rule 20 (stmt_end)
+    END       [reduce using rule 28 (delim)]
+    ';'       reduce using rule 20 (stmt_end)
+    ';'       [reduce using rule 28 (delim)]
+    $default  reduce using rule 20 (stmt_end)
 
 
 state 52
 
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-   31    | NOT exp .
+   17 stmtlist: error stmt_end .
 
-    $default  reduce using rule 31 (exp)
+    $default  reduce using rule 17 (stmtlist)
 
 
 state 53
 
-   43 rvalue: ID '[' . exp ']'
+   30 wstmt: error delim .
+   35 ifhead: error delim .
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp     go to state 72
-    rvalue  go to state 41
+    THEN      reduce using rule 35 (ifhead)
+    $default  reduce using rule 30 (wstmt)
 
 
 state 54
 
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-   32    | '(' exp . ')'
+   19 stmt_end: rvalue .
 
-    OR    shift, and go to state 55
-    EXOR  shift, and go to state 56
-    AND   shift, and go to state 57
-    '+'   shift, and go to state 58
-    '-'   shift, and go to state 59
-    '*'   shift, and go to state 60
-    ')'   shift, and go to state 73
+    $default  reduce using rule 19 (stmt_end)
 
 
 state 55
 
-   29 exp: exp OR . exp
+   18 stmt_end: constant .
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp     go to state 74
-    rvalue  go to state 41
+    $default  reduce using rule 18 (stmt_end)
 
 
 state 56
 
-   30 exp: exp EXOR . exp
+   61 constant: boolean_constant .
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp     go to state 75
-    rvalue  go to state 41
+    $default  reduce using rule 61 (constant)
 
 
 state 57
 
-   28 exp: exp AND . exp
+   58 rvalue: ID_USE .
+   59       | ID_USE . '[' exp ']'
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
+    '['  shift, and go to state 76
 
-    exp     go to state 76
-    rvalue  go to state 41
+    $default  reduce using rule 58 (rvalue)
 
 
 state 58
 
-   25 exp: exp '+' . exp
+   37 writestmt: WRITELN '(' . exp ')'
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
 
-    exp     go to state 77
-    rvalue  go to state 41
+    exp               go to state 77
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
 
 
 state 59
 
-   26 exp: exp '-' . exp
+   49 exp: error . stmt_end
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '\n'    shift, and go to state 78
 
-    exp     go to state 78
-    rvalue  go to state 41
+    stmt_end          go to state 79
+    rvalue            go to state 54
+    constant          go to state 55
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
 
 
 state 60
 
-   27 exp: exp '*' . exp
+   46 exp: NOT . exp
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
 
-    exp     go to state 79
-    rvalue  go to state 41
+    exp               go to state 80
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
 
 
 state 61
 
-   34 condexp: exp "!=" . exp
+   47 exp: '(' . exp ')'
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
 
-    exp     go to state 80
-    rvalue  go to state 41
+    exp               go to state 81
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
 
 
 state 62
 
-   35 condexp: exp "==" . exp
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+   50 condexp: exp . NEQ exp
+   51        | exp . EQ exp
+   52        | exp . LT exp
+   53        | exp . LEQ exp
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp     go to state 81
-    rvalue  go to state 41
+    EQ    shift, and go to state 82
+    NEQ   shift, and go to state 83
+    LT    shift, and go to state 84
+    LEQ   shift, and go to state 85
+    OR    shift, and go to state 86
+    EXOR  shift, and go to state 87
+    AND   shift, and go to state 88
+    '+'   shift, and go to state 89
+    '-'   shift, and go to state 90
+    '*'   shift, and go to state 91
 
 
 state 63
 
-   36 condexp: exp "<" . exp
+   34 ifhead: IF condexp .
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp     go to state 82
-    rvalue  go to state 41
+    $default  reduce using rule 34 (ifhead)
 
 
 state 64
 
-   37 condexp: exp "<=" . exp
+   39 exp: rvalue .
 
-    NOT     shift, and go to state 33
-    ID      shift, and go to state 50
-    ICONST  shift, and go to state 37
-    '('     shift, and go to state 38
-
-    exp     go to state 83
-    rvalue  go to state 41
+    $default  reduce using rule 39 (exp)
 
 
 state 65
 
-   16 wstmt: WHILE condexp DO . stmt
+   48 exp: constant .
 
-    WRITELN  shift, and go to state 16
-    IF       shift, and go to state 17
-    BEG      shift, and go to state 12
-    WHILE    shift, and go to state 18
-    FOR      shift, and go to state 19
-    ID       shift, and go to state 20
-
-    stmt       go to state 84
-    wstmt      go to state 23
-    fstmt      go to state 24
-    ifstmt     go to state 25
-    ifhead     go to state 26
-    cmpdstmt   go to state 27
-    writestmt  go to state 28
-    astmt      go to state 29
-    lvalue     go to state 30
+    $default  reduce using rule 48 (exp)
 
 
 state 66
 
-   17 fstmt: FOR ID ":=" . ICONST ',' ICONST DO astmt
+   55 condexp: boolean_constant .
+   61 constant: boolean_constant .
 
-    ICONST  shift, and go to state 85
+    THEN      reduce using rule 55 (condexp)
+    DO        reduce using rule 55 (condexp)
+    $default  reduce using rule 61 (constant)
 
 
 state 67
 
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-   41 lvalue: ID '[' exp . ']'
+   54 condexp: ID_USE .
+   58 rvalue: ID_USE .
+   59       | ID_USE . '[' exp ']'
 
-    OR    shift, and go to state 55
-    EXOR  shift, and go to state 56
-    AND   shift, and go to state 57
-    '+'   shift, and go to state 58
-    '-'   shift, and go to state 59
-    '*'   shift, and go to state 60
-    ']'   shift, and go to state 86
+    '['  shift, and go to state 76
+
+    THEN      reduce using rule 54 (condexp)
+    DO        reduce using rule 54 (condexp)
+    $default  reduce using rule 58 (rvalue)
 
 
 state 68
 
-    8 stmtlist: stmtlist ';' stmt .
-
-    $default  reduce using rule 8 (stmtlist)
-
-
-state 69
-
-   18 ifstmt: ifhead THEN stmt . ELSE stmt
-   19       | ifhead THEN stmt .
-
-    ELSE  shift, and go to state 87
-
-    $default  reduce using rule 19 (ifstmt)
-
-
-state 70
-
-   23 astmt: lvalue ":=" exp .
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-
-    OR    shift, and go to state 55
-    EXOR  shift, and go to state 56
-    AND   shift, and go to state 57
-    '+'   shift, and go to state 58
-    '-'   shift, and go to state 59
-    '*'   shift, and go to state 60
-
-    $default  reduce using rule 23 (astmt)
-
-
-state 71
-
-   22 writestmt: WRITELN '(' exp ')' .
-
-    $default  reduce using rule 22 (writestmt)
-
-
-state 72
-
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-   43 rvalue: ID '[' exp . ']'
-
-    OR    shift, and go to state 55
-    EXOR  shift, and go to state 56
-    AND   shift, and go to state 57
-    '+'   shift, and go to state 58
-    '-'   shift, and go to state 59
-    '*'   shift, and go to state 60
-    ']'   shift, and go to state 88
-
-
-state 73
-
-   32 exp: '(' exp ')' .
-
-    $default  reduce using rule 32 (exp)
-
-
-state 74
-
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   29    | exp OR exp .
-   30    | exp . EXOR exp
-
-    AND  shift, and go to state 57
-    '*'  shift, and go to state 60
-
-    $default  reduce using rule 29 (exp)
-
-
-state 75
-
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-   30    | exp EXOR exp .
-
-    AND  shift, and go to state 57
-    '*'  shift, and go to state 60
-
-    $default  reduce using rule 30 (exp)
-
-
-state 76
-
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   28    | exp AND exp .
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-
-    $default  reduce using rule 28 (exp)
-
-
-state 77
-
-   25 exp: exp . '+' exp
-   25    | exp '+' exp .
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-
-    AND  shift, and go to state 57
-    '*'  shift, and go to state 60
-
-    $default  reduce using rule 25 (exp)
-
-
-state 78
-
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   26    | exp '-' exp .
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-
-    AND  shift, and go to state 57
-    '*'  shift, and go to state 60
-
-    $default  reduce using rule 26 (exp)
-
-
-state 79
-
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   27    | exp '*' exp .
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-
-    $default  reduce using rule 27 (exp)
-
-
-state 80
-
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-   34 condexp: exp "!=" exp .
-
-    OR    shift, and go to state 55
-    EXOR  shift, and go to state 56
-    AND   shift, and go to state 57
-    '+'   shift, and go to state 58
-    '-'   shift, and go to state 59
-    '*'   shift, and go to state 60
-
-    $default  reduce using rule 34 (condexp)
-
-
-state 81
-
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-   35 condexp: exp "==" exp .
-
-    OR    shift, and go to state 55
-    EXOR  shift, and go to state 56
-    AND   shift, and go to state 57
-    '+'   shift, and go to state 58
-    '-'   shift, and go to state 59
-    '*'   shift, and go to state 60
-
-    $default  reduce using rule 35 (condexp)
-
-
-state 82
-
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-   36 condexp: exp "<" exp .
-
-    OR    shift, and go to state 55
-    EXOR  shift, and go to state 56
-    AND   shift, and go to state 57
-    '+'   shift, and go to state 58
-    '-'   shift, and go to state 59
-    '*'   shift, and go to state 60
-
-    $default  reduce using rule 36 (condexp)
-
-
-state 83
-
-   25 exp: exp . '+' exp
-   26    | exp . '-' exp
-   27    | exp . '*' exp
-   28    | exp . AND exp
-   29    | exp . OR exp
-   30    | exp . EXOR exp
-   37 condexp: exp "<=" exp .
-
-    OR    shift, and go to state 55
-    EXOR  shift, and go to state 56
-    AND   shift, and go to state 57
-    '+'   shift, and go to state 58
-    '-'   shift, and go to state 59
-    '*'   shift, and go to state 60
-
-    $default  reduce using rule 37 (condexp)
-
-
-state 84
-
-   16 wstmt: WHILE condexp DO stmt .
-
-    $default  reduce using rule 16 (wstmt)
-
-
-state 85
-
-   17 fstmt: FOR ID ":=" ICONST . ',' ICONST DO astmt
-
-    ','  shift, and go to state 89
-
-
-state 86
-
-   41 lvalue: ID '[' exp ']' .
-
-    $default  reduce using rule 41 (lvalue)
-
-
-state 87
-
-   18 ifstmt: ifhead THEN stmt ELSE . stmt
-
-    WRITELN  shift, and go to state 16
-    IF       shift, and go to state 17
-    BEG      shift, and go to state 12
-    WHILE    shift, and go to state 18
-    FOR      shift, and go to state 19
-    ID       shift, and go to state 20
-
-    stmt       go to state 90
-    wstmt      go to state 23
-    fstmt      go to state 24
-    ifstmt     go to state 25
-    ifhead     go to state 26
-    cmpdstmt   go to state 27
-    writestmt  go to state 28
-    astmt      go to state 29
-    lvalue     go to state 30
-
-
-state 88
-
-   43 rvalue: ID '[' exp ']' .
-
-    $default  reduce using rule 43 (rvalue)
-
-
-state 89
-
-   17 fstmt: FOR ID ":=" ICONST ',' . ICONST DO astmt
-
-    ICONST  shift, and go to state 91
-
-
-state 90
-
-   18 ifstmt: ifhead THEN stmt ELSE stmt .
-
-    $default  reduce using rule 18 (ifstmt)
-
-
-state 91
-
-   17 fstmt: FOR ID ":=" ICONST ',' ICONST . DO astmt
+   29 wstmt: WHILE condexp . DO stmt
 
     DO  shift, and go to state 92
 
 
+state 69
+
+   31 fstmt: FOR ID_USE . ASG constant ',' constant DO astmt
+
+    ASG  shift, and go to state 93
+
+
+state 70
+
+   36 cmpdstmt: BEG stmtlist END .
+
+    $default  reduce using rule 36 (cmpdstmt)
+
+
+state 71
+
+   15 stmtlist: stmtlist ';' . stmt
+
+    error    shift, and go to state 94
+    WRITELN  shift, and go to state 25
+    IF       shift, and go to state 26
+    BEG      shift, and go to state 15
+    WHILE    shift, and go to state 27
+    FOR      shift, and go to state 28
+    ID       shift, and go to state 29
+
+    stmt       go to state 95
+    wstmt      go to state 32
+    fstmt      go to state 33
+    ifstmt     go to state 34
+    ifhead     go to state 35
+    cmpdstmt   go to state 36
+    writestmt  go to state 37
+    astmt      go to state 38
+    lvalue     go to state 39
+    ID_USE     go to state 40
+
+
+state 72
+
+   32 ifstmt: ifhead THEN . stmt ELSE stmt
+   33       | ifhead THEN . stmt
+
+    error    shift, and go to state 94
+    WRITELN  shift, and go to state 25
+    IF       shift, and go to state 26
+    BEG      shift, and go to state 15
+    WHILE    shift, and go to state 27
+    FOR      shift, and go to state 28
+    ID       shift, and go to state 29
+
+    stmt       go to state 96
+    wstmt      go to state 32
+    fstmt      go to state 33
+    ifstmt     go to state 34
+    ifhead     go to state 35
+    cmpdstmt   go to state 36
+    writestmt  go to state 37
+    astmt      go to state 38
+    lvalue     go to state 39
+    ID_USE     go to state 40
+
+
+state 73
+
+   38 astmt: lvalue ASG . exp
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 97
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
+state 74
+
+   57 lvalue: ID_USE '[' . exp ']'
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 98
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
+state 75
+
+   11 type: ARRAY '[' . ICONST RANGE ICONST ']' OF stype
+
+    ICONST  shift, and go to state 99
+
+
+state 76
+
+   59 rvalue: ID_USE '[' . exp ']'
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 100
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
+state 77
+
+   37 writestmt: WRITELN '(' exp . ')'
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+
+    OR    shift, and go to state 86
+    EXOR  shift, and go to state 87
+    AND   shift, and go to state 88
+    '+'   shift, and go to state 89
+    '-'   shift, and go to state 90
+    '*'   shift, and go to state 91
+    ')'   shift, and go to state 101
+
+
+state 78
+
+   20 stmt_end: '\n' .
+
+    $default  reduce using rule 20 (stmt_end)
+
+
+state 79
+
+   49 exp: error stmt_end .
+
+    $default  reduce using rule 49 (exp)
+
+
+state 80
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+   46    | NOT exp .
+
+    $default  reduce using rule 46 (exp)
+
+
+state 81
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+   47    | '(' exp . ')'
+
+    OR    shift, and go to state 86
+    EXOR  shift, and go to state 87
+    AND   shift, and go to state 88
+    '+'   shift, and go to state 89
+    '-'   shift, and go to state 90
+    '*'   shift, and go to state 91
+    ')'   shift, and go to state 102
+
+
+state 82
+
+   51 condexp: exp EQ . exp
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 103
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
+state 83
+
+   50 condexp: exp NEQ . exp
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 104
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
+state 84
+
+   52 condexp: exp LT . exp
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 105
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
+state 85
+
+   53 condexp: exp LEQ . exp
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 106
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
+state 86
+
+   44 exp: exp OR . exp
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 107
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
+state 87
+
+   45 exp: exp EXOR . exp
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 108
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
+state 88
+
+   43 exp: exp AND . exp
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 109
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
+state 89
+
+   40 exp: exp '+' . exp
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 110
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
+state 90
+
+   41 exp: exp '-' . exp
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 111
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
+state 91
+
+   42 exp: exp '*' . exp
+
+    error   shift, and go to state 59
+    NOT     shift, and go to state 60
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ID      shift, and go to state 29
+    ICONST  shift, and go to state 50
+    '('     shift, and go to state 61
+
+    exp               go to state 112
+    rvalue            go to state 64
+    constant          go to state 65
+    boolean_constant  go to state 56
+    ID_USE            go to state 57
+
+
 state 92
 
-   17 fstmt: FOR ID ":=" ICONST ',' ICONST DO . astmt
+   29 wstmt: WHILE condexp DO . stmt
 
-    ID  shift, and go to state 20
+    error    shift, and go to state 94
+    WRITELN  shift, and go to state 25
+    IF       shift, and go to state 26
+    BEG      shift, and go to state 15
+    WHILE    shift, and go to state 27
+    FOR      shift, and go to state 28
+    ID       shift, and go to state 29
 
-    astmt   go to state 93
-    lvalue  go to state 30
+    stmt       go to state 113
+    wstmt      go to state 32
+    fstmt      go to state 33
+    ifstmt     go to state 34
+    ifhead     go to state 35
+    cmpdstmt   go to state 36
+    writestmt  go to state 37
+    astmt      go to state 38
+    lvalue     go to state 39
+    ID_USE     go to state 40
 
 
 state 93
 
-   17 fstmt: FOR ID ":=" ICONST ',' ICONST DO astmt .
+   31 fstmt: FOR ID_USE ASG . constant ',' constant DO astmt
 
-    $default  reduce using rule 17 (fstmt)
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ICONST  shift, and go to state 50
+
+    constant          go to state 114
+    boolean_constant  go to state 56
+
+
+state 94
+
+   30 wstmt: error . delim
+   35 ifhead: error . delim
+
+    ';'   shift, and go to state 17
+    '\n'  shift, and go to state 18
+
+    delim  go to state 53
+
+
+state 95
+
+   15 stmtlist: stmtlist ';' stmt .
+
+    $default  reduce using rule 15 (stmtlist)
+
+
+state 96
+
+   32 ifstmt: ifhead THEN stmt . ELSE stmt
+   33       | ifhead THEN stmt .
+
+    ELSE  shift, and go to state 115
+
+    $default  reduce using rule 33 (ifstmt)
+
+
+state 97
+
+   38 astmt: lvalue ASG exp .
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+
+    OR    shift, and go to state 86
+    EXOR  shift, and go to state 87
+    AND   shift, and go to state 88
+    '+'   shift, and go to state 89
+    '-'   shift, and go to state 90
+    '*'   shift, and go to state 91
+
+    $default  reduce using rule 38 (astmt)
+
+
+state 98
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+   57 lvalue: ID_USE '[' exp . ']'
+
+    OR    shift, and go to state 86
+    EXOR  shift, and go to state 87
+    AND   shift, and go to state 88
+    '+'   shift, and go to state 89
+    '-'   shift, and go to state 90
+    '*'   shift, and go to state 91
+    ']'   shift, and go to state 116
+
+
+state 99
+
+   11 type: ARRAY '[' ICONST . RANGE ICONST ']' OF stype
+
+    RANGE  shift, and go to state 117
+
+
+state 100
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+   59 rvalue: ID_USE '[' exp . ']'
+
+    OR    shift, and go to state 86
+    EXOR  shift, and go to state 87
+    AND   shift, and go to state 88
+    '+'   shift, and go to state 89
+    '-'   shift, and go to state 90
+    '*'   shift, and go to state 91
+    ']'   shift, and go to state 118
+
+
+state 101
+
+   37 writestmt: WRITELN '(' exp ')' .
+
+    $default  reduce using rule 37 (writestmt)
+
+
+state 102
+
+   47 exp: '(' exp ')' .
+
+    $default  reduce using rule 47 (exp)
+
+
+state 103
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+   51 condexp: exp EQ exp .
+
+    OR    shift, and go to state 86
+    EXOR  shift, and go to state 87
+    AND   shift, and go to state 88
+    '+'   shift, and go to state 89
+    '-'   shift, and go to state 90
+    '*'   shift, and go to state 91
+
+    $default  reduce using rule 51 (condexp)
+
+
+state 104
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+   50 condexp: exp NEQ exp .
+
+    OR    shift, and go to state 86
+    EXOR  shift, and go to state 87
+    AND   shift, and go to state 88
+    '+'   shift, and go to state 89
+    '-'   shift, and go to state 90
+    '*'   shift, and go to state 91
+
+    $default  reduce using rule 50 (condexp)
+
+
+state 105
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+   52 condexp: exp LT exp .
+
+    OR    shift, and go to state 86
+    EXOR  shift, and go to state 87
+    AND   shift, and go to state 88
+    '+'   shift, and go to state 89
+    '-'   shift, and go to state 90
+    '*'   shift, and go to state 91
+
+    $default  reduce using rule 52 (condexp)
+
+
+state 106
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+   53 condexp: exp LEQ exp .
+
+    OR    shift, and go to state 86
+    EXOR  shift, and go to state 87
+    AND   shift, and go to state 88
+    '+'   shift, and go to state 89
+    '-'   shift, and go to state 90
+    '*'   shift, and go to state 91
+
+    $default  reduce using rule 53 (condexp)
+
+
+state 107
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   44    | exp OR exp .
+   45    | exp . EXOR exp
+
+    AND  shift, and go to state 88
+    '*'  shift, and go to state 91
+
+    $default  reduce using rule 44 (exp)
+
+
+state 108
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+   45    | exp EXOR exp .
+
+    AND  shift, and go to state 88
+    '*'  shift, and go to state 91
+
+    $default  reduce using rule 45 (exp)
+
+
+state 109
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   43    | exp AND exp .
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+
+    $default  reduce using rule 43 (exp)
+
+
+state 110
+
+   40 exp: exp . '+' exp
+   40    | exp '+' exp .
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+
+    AND  shift, and go to state 88
+    '*'  shift, and go to state 91
+
+    $default  reduce using rule 40 (exp)
+
+
+state 111
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   41    | exp '-' exp .
+   42    | exp . '*' exp
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+
+    AND  shift, and go to state 88
+    '*'  shift, and go to state 91
+
+    $default  reduce using rule 41 (exp)
+
+
+state 112
+
+   40 exp: exp . '+' exp
+   41    | exp . '-' exp
+   42    | exp . '*' exp
+   42    | exp '*' exp .
+   43    | exp . AND exp
+   44    | exp . OR exp
+   45    | exp . EXOR exp
+
+    $default  reduce using rule 42 (exp)
+
+
+state 113
+
+   29 wstmt: WHILE condexp DO stmt .
+
+    $default  reduce using rule 29 (wstmt)
+
+
+state 114
+
+   31 fstmt: FOR ID_USE ASG constant . ',' constant DO astmt
+
+    ','  shift, and go to state 119
+
+
+state 115
+
+   32 ifstmt: ifhead THEN stmt ELSE . stmt
+
+    error    shift, and go to state 94
+    WRITELN  shift, and go to state 25
+    IF       shift, and go to state 26
+    BEG      shift, and go to state 15
+    WHILE    shift, and go to state 27
+    FOR      shift, and go to state 28
+    ID       shift, and go to state 29
+
+    stmt       go to state 120
+    wstmt      go to state 32
+    fstmt      go to state 33
+    ifstmt     go to state 34
+    ifhead     go to state 35
+    cmpdstmt   go to state 36
+    writestmt  go to state 37
+    astmt      go to state 38
+    lvalue     go to state 39
+    ID_USE     go to state 40
+
+
+state 116
+
+   57 lvalue: ID_USE '[' exp ']' .
+
+    $default  reduce using rule 57 (lvalue)
+
+
+state 117
+
+   11 type: ARRAY '[' ICONST RANGE . ICONST ']' OF stype
+
+    ICONST  shift, and go to state 121
+
+
+state 118
+
+   59 rvalue: ID_USE '[' exp ']' .
+
+    $default  reduce using rule 59 (rvalue)
+
+
+state 119
+
+   31 fstmt: FOR ID_USE ASG constant ',' . constant DO astmt
+
+    TRUE    shift, and go to state 48
+    FALSE   shift, and go to state 49
+    ICONST  shift, and go to state 50
+
+    constant          go to state 122
+    boolean_constant  go to state 56
+
+
+state 120
+
+   32 ifstmt: ifhead THEN stmt ELSE stmt .
+
+    $default  reduce using rule 32 (ifstmt)
+
+
+state 121
+
+   11 type: ARRAY '[' ICONST RANGE ICONST . ']' OF stype
+
+    ']'  shift, and go to state 123
+
+
+state 122
+
+   31 fstmt: FOR ID_USE ASG constant ',' constant . DO astmt
+
+    DO  shift, and go to state 124
+
+
+state 123
+
+   11 type: ARRAY '[' ICONST RANGE ICONST ']' . OF stype
+
+    OF  shift, and go to state 125
+
+
+state 124
+
+   31 fstmt: FOR ID_USE ASG constant ',' constant DO . astmt
+
+    ID  shift, and go to state 29
+
+    astmt   go to state 126
+    lvalue  go to state 39
+    ID_USE  go to state 40
+
+
+state 125
+
+   11 type: ARRAY '[' ICONST RANGE ICONST ']' OF . stype
+
+    INT      shift, and go to state 43
+    BOOLEAN  shift, and go to state 44
+
+    stype  go to state 127
+
+
+state 126
+
+   31 fstmt: FOR ID_USE ASG constant ',' constant DO astmt .
+
+    $default  reduce using rule 31 (fstmt)
+
+
+state 127
+
+   11 type: ARRAY '[' ICONST RANGE ICONST ']' OF stype .
+
+    $default  reduce using rule 11 (type)

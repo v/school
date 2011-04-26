@@ -96,11 +96,13 @@ def next_register():
 
 """ Recursive Methods for Input Parsing """
 
-""" Program -> StmtList """
+""" Program -> StmtList . """
 def program():
 	if is_id(get_token()) or get_token() == '!':
 		print "loadI \t1020 => r0 //for printing purposes"
 		stmt_list()
+		next_token()
+	if get_token() == '.':
 		return None
 
 	raise ValueError, "Input given has a syntax error id or ! expected, '%s' given " % (get_token())
