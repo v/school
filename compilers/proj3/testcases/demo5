@@ -1,0 +1,12 @@
+program main;
+var i: integer; 
+    x: array [1..100] of integer;
+    sum: integer;
+begin
+  for i:=1, 100 do
+    x[i] := 2;
+  sum := 0;
+  for i:=1,100 do
+    sum := sum + x[i];
+  writeln(sum)
+end.

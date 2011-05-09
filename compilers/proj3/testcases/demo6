@@ -1,0 +1,12 @@
+program main;
+var a, b, c, d, e: integer; 
+begin
+  a := 1;
+  b := 2;
+  c := 3;
+  d := 4;
+  e := a + b * c +  b * c + c * b + a;   
+  writeln(e);
+  e := a + b * c +  b * c + b * c + a;   
+  writeln(e)
+end.

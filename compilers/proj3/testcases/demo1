@@ -1,0 +1,9 @@
+program main;
+var a, b: integer;
+begin
+  a := 1;
+  b := 2;
+  a := a + b;
+  writeln(a);
+  writeln(b)
+end.

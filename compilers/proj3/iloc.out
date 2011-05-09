@@ -1,0 +1,41 @@
+	// Assign STATIC_AREA_ADDRESS to register "r0"
+ 	 loadI 1024 	=> r0 
+	// Load all registers because basic block is starting. 
+
+ 	 loadI 1 	=> r1 
+ 	 loadI 10 	=> r2 
+ 	 loadI 0 	=> r3 
+ 	 loadI 10 	=> r4 
+ 	 cmp_LT r1, r4 	=> r5
+ 	 cbr r5 	=> L0, L1
+	// This is the "true" branch
+L0:	 nop 
+ 	 loadI 1 	=> r6 
+ 	 add r2, r6 	=> r7 
+L16:	 vectoff 
+L1:	 nop 
+	// Load all registers because basic block is starting. 
+
+ 	 loadAI r0, 8 	=> r1 
+ 	 loadAI r0, 4 	=> r7 
+ 	 loadAI r0, 0 	=> r3 
+ 	 loadI 2 	=> r8 
+ 	 add r7, r8 	=> r9 
+ 	 loadI 1 	=> r10 
+ 	 add r3, r10 	=> r11 
+	// Clear all registers because basic block is ending. 
+
+ 	 storeAI r1 	=> r0, 8 
+ 	 storeAI r9 	=> r0, 4 
+ 	 storeAI r11 	=> r0, 0 
+L16:	 vectoff 
+L2:	 nop 
+ 	 store r1 	=> r0 
+ 	 output 1024
+ 	 store r9 	=> r0 
+ 	 output 1024
+	// Clear all registers because basic block is ending. 
+
+ 	 storeAI r1 	=> r0, 8 
+ 	 storeAI r9 	=> r0, 4 
+ 	 storeAI r11 	=> r0, 0 

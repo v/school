@@ -1,0 +1,23 @@
+Files
+-----
+
+instrutil.h and instrutil.c:
+   contains helper functions for code generation
+
+deptest.h and deptest.c:
+   here is where your dependence testing code should go
+
+parse.y:
+  contains incomplete and wrong syntax rules; meant to illustrate
+  the use of the helper functions in instrutil.h/c 
+
+
+You should extend your front-end from project 2 to write the code
+generator and vectorizer for project 3.
+
+testcases/demo?
+  contains basic test cases; this set is not meant to be complete, but
+  should give you a good starting point. 
+
+
+--Uli  April 20, 2011

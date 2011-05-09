@@ -1,0 +1,13 @@
+program main;
+var a, b: integer;
+    i: integer;
+begin
+  a := 1;
+  b := 10;
+  for i:=1,100 do
+    a := a + 2;
+  for i:=1,50 do
+    b := b + 1;
+  a := a + b;
+  writeln(a)
+end.
