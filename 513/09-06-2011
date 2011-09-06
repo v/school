@@ -1,46 +1,85 @@
 
 Maximum Subvector Sum - Take a continuous slice of a vector that gives you the highest sum.
 
-Naive Algorithm would be:
+	Naive Algorithm would be:
 
-max = -infinite
-for i=1 to n:
-	for j=i to n:
-		temp = 0
-		for k=i to j:
-			temp += A[k]
-		if temp > max:
-			update max i & max j
+	max = -infinite
+	for i=1 to n:
+		for j=i to n:
+			temp = 0
+			for k=i to j:
+				temp += A[k]
+			if temp > max:
+				update max i & max j
 
-This gives you a running time of O(n3)
+	This gives you a running time of O(n3)
 
-One thing we can improve on:
-	We calculate sum(i, j) over and over.
-	Instead:
-		sum(i, j) = sum(i, j-1) + A[j]
+	One thing we can improve on:
+		We calculate sum(i, j) over and over.
+		Instead:
+			sum(i, j) = sum(i, j-1) + A[j]
 
-Cooler algorithm:
+	Cooler algorithm:
 
-max = -infinite
-for i=1 to n
-	sum = 0
-	for j=i to n
-		sum += A[j]
-		if sum >= max:
-			update max i and max j
+	max = -infinite
+	for i=1 to n
+		sum = 0
+		for j=i to n
+			sum += A[j]
+			if sum >= max:
+				update max i and max j
 
-Even cooler algorithm:
+	Even cooler algorithm:
 
-Merge the positives and negatives together:
+	Merge the positives and negatives together:
 
-Start vector:
--20 10 5 -3 -2 -1 6 -1 4 -3 -16 -32 12 -1
+	Start vector:
+	-20 10 5 -3 -2 -1 6 -1 4 -3 -16 -32 12 -1
 
-End vector:
-15 -6 6 -1 4 -51 12 -1 0
+	End vector:
+	15 -6 6 -1 4 -51 12 -1 0
 
-Another rule to observe:
-	- We have a subvector from x to y that currently has the maximum sum.
-	- When we add the next number on, we notice that the sum from x to y+1 becomes negative.
-	- When this happens, we stop looking at the numbers we're looking at, and look at the sequence starting with y+2.
-		* This is because the net sum of all the numbers from x to y+1 is negative. Hence, any other sequence you make that includes these numbers will be hurt by the inclusion of the subsequence from x to y+1.
+	Another rule to observe:
+		- We have a subvector from x to y that currently has the maximum sum.
+		- When we add the next number on, we notice that the sum from x to y+1 becomes negative.
+		- When this happens, we stop looking at the numbers we're looking at, and look at the sequence starting with y+2.
+			* This is because the net sum of all the numbers from x to y+1 is negative. Hence, any other sequence you make that includes these numbers will be hurt by the inclusion of the subsequence from x to y+1.
+
+
+--Break--
+Big O and stuff.
+
+	Definition of Order Notation - We say f(n) is O(g(n)) if there exists constants C and N such that:
+		for all n > N, f(n) <= C*(g(n)).
+
+	Alternative definition: f(n) is O(g(n)) iff:
+		lim     f(x)/g(x) <= C. Where C is a constant.
+		n->inf
+
+	L'Hopital's Rule - If the lim f(x) = lim g(x) = inf. lim f(x)/g(x) = lim f'(x)/g'(x).
+
+	Definition of Big Theta - We say f(n) is theta(g(n)) iff:
+		lim     f(x)/g(x) = C. Where C is a constant.
+		n->inf
+
+	Definition of Big Omega - We say f(n) is omega(g(n)) iff:
+		lim     g(x)/f(x) <= C. Where C is a constant.
+		n->inf
+
+
+Divide and Conquer:
+	Problem: Let x and y be two n-digit numbers.
+
+	Integer Multiplication (Long Multiplication) - This takes O(n2).
+
+	Integer Addition  - O(n)
+
+
+	Cooler than n2 algorithm:
+		Given:
+			X = A*(2^(n/2)) + B
+			Y = C*(2^(n/2)) + D
+
+		Here, A and B refer to the higher and lower order bits of X, and C & D refer to the higher and lower order bits of Y.
+
+		 	
