@@ -1,0 +1,10 @@
+Intro to Programming Languages and Compilers I
+
+The way that C & Java programs are interpreted is very different from the way logic languages like Prolog are interpreted.
+
+Why did we go for multi cores as opposed to bigger CPUs?
+	- Power became a problem.
+	- Too much heat in the system.
+	- Parallelism has to be dealt with.
+
+
