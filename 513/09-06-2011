@@ -81,5 +81,17 @@ Divide and Conquer:
 			Y = C*(2^(n/2)) + D
 
 		Here, A and B refer to the higher and lower order bits of X, and C & D refer to the higher and lower order bits of Y.
+		
+		XY = AC * 2^n + (AD + BC) * 2^(n/2)  + BD.
 
-		 	
+		To compute the above, we need to compute
+			* AC, AD, BC and BD.
+			* AD + BC
+	
+	Theorem - (Helps solve Recurrence Relations) - The recurrence:
+		T(1) = C
+		T(n) = a T(n)/b + df(n), for multiplicative f is:
+
+		theta( n ^ log b^a) if a > f(b)
+		theta(f(n)) if f(b) > a
+		theta(n ^ (log b^a) log n) if a = f(b).
